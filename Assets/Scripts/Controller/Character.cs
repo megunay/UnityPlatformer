@@ -31,7 +31,7 @@ public partial class @Character : IInputActionCollection2, IDisposable
                     ""name"": ""Movement"",
                     ""type"": ""PassThrough"",
                     ""id"": ""6271dbc5-5cb2-4126-8533-8b41cbc27bd1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -48,9 +48,9 @@ public partial class @Character : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""Sideways"",
-                    ""id"": ""166325af-9fc9-41c0-ae8d-37154cbfcc30"",
-                    ""path"": ""1DAxis"",
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""f6098f32-02d0-42b5-9482-5cbb80d4eb70"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -59,8 +59,30 @@ public partial class @Character : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""e3a9551b-c75f-4733-8056-811d8ea5e3f7"",
+                    ""name"": ""up"",
+                    ""id"": ""1eeeee25-b0ac-4ff5-abf1-eaf18818ba38"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a4b9467d-3d79-440d-9fb5-244ea82df8c8"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8cde5764-b30c-4a2d-8641-4a2e4fa0fad7"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -70,8 +92,8 @@ public partial class @Character : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""dc2919b3-4c2a-46e9-9215-ac0d7b317725"",
+                    ""name"": ""right"",
+                    ""id"": ""8b71d4ff-c452-4f08-b1ab-52d40ce64f73"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
