@@ -9,18 +9,39 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    private Animator anim;
-    private SpriteRenderer spriteR;
+    
 
     //Character Variables
     private float horizontal;
-    [SerializeField]private float moveSpeed = 8f;
-    [SerializeField]private float jumpingPower = 7f;
+    [SerializeField] private float moveSpeed = 8f;
+    [SerializeField] private float jumpingPower = 7f;
+
+    [Header("Dash")]
+    [SerializeField] private bool canDash = true;
+    [SerializeField] private bool isDashing;
+    [SerializeField] private float dashPower;
+    [SerializeField] private float dashTime;
+    [SerializeField] private float dashCooldown;
+    private TrailRenderer dashTrail;
+    [SerializeField] private float dashGravity;
+    private float normalGravity;
+    private float waitTime;
+
+    //Animations
+    private Animator anim;
+    private SpriteRenderer spriteR;
+    private enum movementState { idle, running, jumping, falling, dash };
 
 
     private void Awake()
     {
         character = new Character();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteR = GetComponent<SpriteRenderer>();
+        dashTrail = GetComponent<TrailRenderer>();
+        normalGravity = rb.gravityScale;
+        canDash = true;
     }
 
     private void OnEnable()
@@ -33,18 +54,17 @@ public class PlayerController : MonoBehaviour
         character.Disable();
     }
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        spriteR = GetComponent<SpriteRenderer>();
-    }
     void Update()
     {
         //Horizontal Movement
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
         UpdateAnimation();
+
+        if (isDashing)
+        {
+            return;
+        }
 
     }
 
@@ -73,25 +93,66 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Dash(InputAction.CallbackContext context)    //Problematic
+    {
+        if(context.performed && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
+    IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0);
+        dashTrail.emitting = true;
+        yield return new WaitForSeconds(dashTime);
+        dashTrail.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
     private void UpdateAnimation()
     {
+        movementState state;
         //Running Animation && Flip Character
         if (horizontal > 0f)
         {
-            anim.SetBool("isRunning", true);
+            state = movementState.running;
             spriteR.flipX = false;
         }
         else if (horizontal < 0f)
         {
-            anim.SetBool("isRunning", true);
+            state = movementState.running;
             spriteR.flipX = true;
         }
         else
         {
-            anim.SetBool("isRunning", false);
+            state = movementState.idle;
         }
+        anim.SetInteger("state", 0);
 
         //Jumping Animation
-        if ()
+        if(rb.velocity.y > 0.1f)
+        {
+            state = movementState.jumping;
+        }
+        else if(rb.velocity.y < -0.1f)
+        {
+            state = movementState.falling;
+        }
+
+        anim.SetInteger("state", (int)state);
+
+        //Dashing Animation
+        if (isDashing)
+        {
+            state = movementState.dash;
+        }
     }
 }
