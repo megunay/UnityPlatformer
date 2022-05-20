@@ -66,6 +66,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.C) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
     }
 
     private bool IsGrounded()
@@ -93,21 +98,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Dash(InputAction.CallbackContext context)    //Problematic
-    {
-        if(context.performed && canDash)
-        {
-            StartCoroutine(Dash());
-        }
-    }
+    //public void Dash(InputAction.CallbackContext context)    //Problematic
+    //{
+    //    if(context.performed && canDash)
+    //    {
+    //        StartCoroutine(Dash());
+    //    }
+    //}
 
-    IEnumerator Dash()
+
+    private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0;
-        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0);
+        rb.gravityScale = 0f;
+        if(horizontal > 0f)
+        {
+            rb.velocity = new Vector2(transform.localScale.x * dashPower, 0f);
+        }
+        else if(horizontal < 0f)
+        {
+            rb.velocity = new Vector2(-transform.localScale.x * dashPower, 0f);
+        }
         dashTrail.emitting = true;
         yield return new WaitForSeconds(dashTime);
         dashTrail.emitting = false;
