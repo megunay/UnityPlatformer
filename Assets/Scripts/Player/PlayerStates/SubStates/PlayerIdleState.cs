@@ -8,9 +8,9 @@ public class PlayerIdleState : PlayerGroundedState
     {
     }
 
-    public override void DoCheck()
+    public override void DoChecks()
     {
-        base.DoCheck();
+        base.DoChecks();
     }
 
     public override void Enter()

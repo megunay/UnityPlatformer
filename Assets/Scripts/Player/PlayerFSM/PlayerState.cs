@@ -22,7 +22,7 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        DoCheck();
+        DoChecks();
         player.Anim.SetBool(animBoolName, true);
         startTime = Time.time;
         Debug.Log(animBoolName);
@@ -40,10 +40,10 @@ public class PlayerState
 
     public virtual void PhysicsUpdate()
     {
-        DoCheck();
+        DoChecks();
     }
 
-    public virtual void DoCheck()
+    public virtual void DoChecks()
     {
 
     }
