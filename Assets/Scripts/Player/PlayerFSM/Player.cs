@@ -105,15 +105,19 @@ public class Player : MonoBehaviour
             }
         }
 
-    
+
 
     #endregion
 
     #region Other Functions
+
+    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
+
+    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     private void Flip()
     {
         FacingDir *= -1;
-        transform.Rotate(0f, 180f, 0f);
+        transform.Rotate(0f, 180f, 0f); //Bu kýsým sebebiyle karakterimiz flip oldugunda kamera da flip oluyor. Buglu
         
     }
 
