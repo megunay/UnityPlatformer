@@ -20,6 +20,8 @@ public class PlayerJumpState : PlayerAbilityState
 
         jumpCountLeft--;
 
+        player.InAirState.SetIsJumping();
+
         
     }
 
