@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
     
     public PlayerLandState LandState { get; private set; }
 
+    public PlayerWallSlideState WallSlideState { get; private set; }
+
+    public PlayerWallGrabState WallGrabState { get; private set; }
+
+    public PlayerWallClimbState WallClimbState { get; private set; }
+
     [SerializeField] private PlayerData playerData;
 
     #endregion
@@ -29,6 +35,7 @@ public class Player : MonoBehaviour
 
     #region Check Transforms
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform wallCheck;
     #endregion
 
     #region Other Variables
@@ -48,6 +55,9 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
+        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
+        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
     }
 
     private void Start()
@@ -92,18 +102,24 @@ public class Player : MonoBehaviour
 
     #region Check Functions
 
-    public bool isGrounded()
+    public bool CheckIfTouchingGround()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
     }
 
     public void FlipCheck(int xInput)
-        {
-            if(xInput != 0 && xInput != FacingDir)
+    {
+        if(xInput != 0 && xInput != FacingDir)
             {
                 Flip();
             }
-        }
+    }
+
+    public bool CheckIfTouchingWall()
+    {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+    }
+
 
 
 
