@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
 
     public PlayerWallClimbState WallClimbState { get; private set; }
 
+    public PlayerWallJumpState WallJumpState { get; private set; }
+
     [SerializeField] private PlayerData playerData;
 
     #endregion
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
         WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
         WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
+        WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
     }
 
     private void Start()
