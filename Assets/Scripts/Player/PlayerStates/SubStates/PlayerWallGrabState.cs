@@ -54,7 +54,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
                 stateMachine.ChangeState(player.WallSlideState);
             }
         }
-    }
+    } 
 
     private void HoldPosition()
     {
