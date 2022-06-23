@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
     private void Flip()
     {
         FacingDir *= -1;
-        transform.Rotate(0f, 180f, 0f); //Bu kýsým sebebiyle karakterimiz flip oldugunda kamera da flip oluyor. Buglu
+        transform.Rotate(0f, 180f, 0f); 
         
     }
 
