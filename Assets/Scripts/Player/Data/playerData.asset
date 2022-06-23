@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 10
   jumpVelocity: 15
-  jumpCount: 2
+  jumpCount: 3
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 2
@@ -22,6 +22,8 @@ MonoBehaviour:
   wallJumpVelocity: 20
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
+  startOffset: {x: 0.4, y: 0.9}
+  stopOffset: {x: 0, y: 0}
   groundCheckRadius: 0.3
   wallCheckDistance: 0.5
   whatIsGround:
@@ -29,4 +31,4 @@ MonoBehaviour:
     m_Bits: 64
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 64
