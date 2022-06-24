@@ -79,7 +79,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LandState);
         }
-        else if (isTouchingWall && !isTouchingLedge)
+        else if (isTouchingWall && !isTouchingLedge && !isGrounded)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
@@ -95,7 +95,7 @@ public class PlayerInAirState : PlayerState
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
         }   
-        else if (isTouchingWall && grabInput)
+        else if (isTouchingWall && grabInput && isTouchingLedge)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

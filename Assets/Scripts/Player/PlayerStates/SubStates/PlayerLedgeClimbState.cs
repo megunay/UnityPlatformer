@@ -11,6 +11,7 @@ public class PlayerLedgeClimbState : PlayerState
 
     private bool isHanging;
     private bool isClimbling;
+    private bool jumpInput;
 
     private int xInput;
     private int yInput;
@@ -72,6 +73,7 @@ public class PlayerLedgeClimbState : PlayerState
 
             xInput = player.InputHandler.NormInputX;
             yInput = player.InputHandler.NormInputY;
+            jumpInput = player.InputHandler.JumpInput;
 
             if (xInput == player.FacingDir && isHanging && !isClimbling)
             {
@@ -81,6 +83,11 @@ public class PlayerLedgeClimbState : PlayerState
             else if (yInput == -1 && isHanging && !isClimbling)
             {
                 stateMachine.ChangeState(player.InAirState);
+            }
+            else if (jumpInput && !isClimbling)
+            {
+                player.WallJumpState.DetermineWallJumpDirection(true);
+                stateMachine.ChangeState(player.WallJumpState);
             }
         }
     }
