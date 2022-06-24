@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
 
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
 
+    public PlayerDashState DashState { get; private set; }
+
     [SerializeField] private PlayerData playerData;
 
     #endregion
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
+        DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
     }
 
     private void Start()
@@ -180,7 +183,4 @@ public class Player : MonoBehaviour
     }
 
     #endregion
-
-
-
 }
