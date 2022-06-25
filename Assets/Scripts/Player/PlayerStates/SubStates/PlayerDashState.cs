@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerAbilityState
 {
-    public bool canDash { get; private set; }
+    public bool CanDash { get; private set; }
 
     private float lastDashTime;
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -13,6 +13,8 @@ public class PlayerDashState : PlayerAbilityState
 
     public bool CheckIfCanDash()
     {
-        return canDash && Time.time >= lastDashTime + playerData.dashCD;
+        return CanDash && Time.time >= lastDashTime + playerData.dashCD;
     }
+
+    public void ResetCanDash() => CanDash = true;
 }
