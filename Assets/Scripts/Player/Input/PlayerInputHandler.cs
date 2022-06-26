@@ -5,7 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    private PlayerInput playerInput;
+    private Camera camera;
+
     public Vector2 RawMovementInput { get; private set; }
+    public Vector2 RawDashDirection { get; private set; }
+    public Vector2Int DashDirectionInput { get; private set; }
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
@@ -18,6 +23,12 @@ public class PlayerInputHandler : MonoBehaviour
 
     private float jumpInputStartTime;
     private float dashInputStartTime;
+
+    private void Start()
+    {
+        playerInput.GetComponent<PlayerInput>();
+        camera = Camera.main;
+    }
 
     private void Update()
     {
@@ -90,6 +101,18 @@ public class PlayerInputHandler : MonoBehaviour
         {
             DashInputStop = true;
         }
+    }
+
+    public void OnDashDirection(InputAction.CallbackContext context)
+    {
+        RawDashDirection = context.ReadValue<Vector2>();
+
+        if(playerInput.currentControlScheme == "Keyboard")
+        {
+            RawDashDirection = camera.ScreenToWorldPoint((Vector3)RawDashDirection) - transform.position;
+        }
+
+        DashDirectionInput = Vector2Int.RoundToInt(RawDashDirection.normalized);
     }
 
     public void UseJumpInput() => JumpInput = false;
