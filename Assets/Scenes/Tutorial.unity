@@ -474,7 +474,7 @@ MonoBehaviour:
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
 --- !u!114 &396235186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31986,7 +31986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1562560285
 Transform:
   m_ObjectHideFlags: 0
