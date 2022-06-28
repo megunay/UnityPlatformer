@@ -26,7 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Start()
     {
-        playerInput.GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInput>();
 
         cam = Camera.main;
     }
