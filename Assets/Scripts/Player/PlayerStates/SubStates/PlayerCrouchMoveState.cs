@@ -2,17 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCrouchMoveState : MonoBehaviour
+public class PlayerCrouchMoveState : PlayerGroundedState
 {
-    // Start is called before the first frame update
-    void Start()
+    public PlayerCrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+
+        player.SetColliderHeight(playerData.crouchColliderHeight);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.SetColliderHeight(playerData.standColliderHeight);
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (!isExitingState)
+        {
+            player.SetVelocityX(playerData.crouchMovementVelocity * player.FacingDir);
+            player.FlipCheck(xInput);
+
+            if(xInput == 0)
+            {
+                stateMachine.ChangeState(player.CrouchIdleState);
+            }
+            else if(yInput != -1 && !isTouchingCeiling)
+            {
+                stateMachine.ChangeState(player.MoveState);
+            }
+        }
     }
 }
