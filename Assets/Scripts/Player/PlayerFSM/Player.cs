@@ -173,8 +173,8 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;
-        workSpace.Set(xDistance * FacingDir, 0f);
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workSpace),Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.whatIsGround);
+        workSpace.Set(xDistance + 0.015f * FacingDir, 0f);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workSpace),Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
         float yDistance = yHit.distance;
 
         workSpace.Set(wallCheck.position.x + (xDistance * FacingDir), ledgeCheck.position.y - yDistance);
