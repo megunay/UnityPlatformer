@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
-        DashDirectionIndicator = transform.Find("DashDirIndicator");
+        DashDirectionIndicator = transform.Find("DashDirectionIndicator");
         MovementCollider = GetComponent<BoxCollider2D>();
 
         FacingDir = 1;
@@ -167,7 +167,6 @@ public class Player : MonoBehaviour
 
 
     #endregion
-
     #region Other Functions
 
     public void SetColliderHeight(float height)

@@ -31953,7 +31953,7 @@ GameObject:
   - component: {fileID: 1562560285}
   - component: {fileID: 1562560286}
   m_Layer: 0
-  m_Name: DashDirIndicator
+  m_Name: DashDirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
