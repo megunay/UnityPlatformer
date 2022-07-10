@@ -27,5 +27,17 @@ public class PlayerAttackState : PlayerAbilityState
     public void SetWeapon(Weapon weapon)
     {
         this.weapon = weapon;
+        weapon.InitializeWeapon(this);
     }
+
+    #region Animation Triggers
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAbilityDone = true;
+    }
+
+    #endregion
 }
