@@ -150,7 +150,7 @@
                 {
                     "name": "",
                     "id": "1e2397fe-a2e5-4063-bf54-df1151f52994",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
