@@ -63,6 +63,16 @@ public class Weapon : MonoBehaviour
     {
         state.SetPlayerVelocity(0f);
     }
+
+    public virtual void AnimationTurnOffFlipTrigger()
+    {
+        state.SetFlipCheck(false);
+    }
+
+    public virtual void AnimationTurnOnFlipTrigger()
+    {
+        state.SetFlipCheck(true);
+    }
     
     #endregion
 
