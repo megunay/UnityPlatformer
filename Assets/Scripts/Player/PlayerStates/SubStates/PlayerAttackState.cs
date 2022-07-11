@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerAttackState : PlayerAbilityState
 {
     private Weapon weapon;
+
+    private float velocityToSet;
+    private bool setVelocity;
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
 
@@ -13,6 +16,8 @@ public class PlayerAttackState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
+
+        setVelocity = false;
 
         weapon.EnterWeapon();
     }
@@ -24,10 +29,28 @@ public class PlayerAttackState : PlayerAbilityState
         weapon.ExitWeapon();
     }
 
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (setVelocity)
+        {
+            player.SetVelocityX(velocityToSet * player.FacingDir);
+        }
+    }
+
     public void SetWeapon(Weapon weapon)
     {
         this.weapon = weapon;
         weapon.InitializeWeapon(this);
+    }
+
+    public void SetPlayerVelocity(float velocity)
+    {
+        player.SetVelocityX(velocity * player.FacingDir);
+
+        velocityToSet = velocity;
+        setVelocity = true;
     }
 
     #region Animation Triggers
