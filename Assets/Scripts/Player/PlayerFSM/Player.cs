@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
 
     #region Other Variables
     public int FacingDir { get; private set; }
-
     private Vector2 workSpace;
     #endregion
 
@@ -54,6 +53,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Core = GetComponentInChildren<Core>();
+
         StateMachine = new PlayerStateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        currentVelocity = RB.velocity;
+        Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
     }
 
