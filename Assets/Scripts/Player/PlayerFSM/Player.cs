@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     public Transform DashDirectionIndicator { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
     public PlayerInventory Inventory { get; private set; }
+    public Core Core { get; private set; }
+
     #endregion
 
     #region Check Transforms
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
     #region Unity Callback Functions
     private void Awake()
     {
+        Core = GetComponentInChildren<Core>();
         StateMachine = new PlayerStateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
@@ -69,6 +72,7 @@ public class Player : MonoBehaviour
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
         PrimaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
         SecondaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        
     }
 
     private void Start()
@@ -98,43 +102,6 @@ public class Player : MonoBehaviour
     {
         StateMachine.CurrentState.PhysicsUpdate();
     }
-    #endregion
-
-    #region Set Functions
-
-    public void SetVelocityZero()
-    {
-        RB.velocity = Vector2.zero;
-        currentVelocity = Vector2.zero;
-    }
-    public void SetVelocity(float velocity,Vector2 angle, int direction)
-    {
-        angle.Normalize();
-        workSpace.Set(angle.x * velocity * direction, angle.y * velocity);
-        RB.velocity = workSpace;
-        currentVelocity = workSpace;
-    }
-
-    public void SetVelocity(float velocity, Vector2 direction)
-    {
-        workSpace = direction * velocity;
-        RB.velocity = workSpace;
-        currentVelocity = workSpace;
-    }
-    public void SetVelocityX(float velocity)
-    {
-        workSpace.Set(velocity, currentVelocity.y);
-        RB.velocity = workSpace;
-        currentVelocity = workSpace;
-    }
-
-    public void SetVelocityY(float velocity)
-    {
-        workSpace.Set(currentVelocity.x, velocity);
-        RB.velocity = workSpace;
-        currentVelocity = workSpace;
-    }
-
     #endregion
 
     #region Check Functions

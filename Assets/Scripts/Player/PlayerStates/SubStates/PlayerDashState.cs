@@ -37,7 +37,7 @@ public class PlayerDashState : PlayerAbilityState
 
         if (player.currentVelocity.y > 0)
         {
-            player.SetVelocityY(player.currentVelocity.y * playerData.dashEndYMultiplier);
+            core.Movement.SetVelocityY(player.currentVelocity.y * playerData.dashEndYMultiplier);
         }
     }
 
@@ -71,13 +71,13 @@ public class PlayerDashState : PlayerAbilityState
                     startTime = Time.time;
                     player.FlipCheck(Mathf.RoundToInt(dashDirection.x));
                     player.RB.drag = playerData.drag;
-                    player.SetVelocity(playerData.dashVelocity, dashDirection);
+                    core.Movement.SetVelocity(playerData.dashVelocity, dashDirection);
                     player.DashDirectionIndicator.gameObject.SetActive(false);
                 }
             }
             else
             {
-                player.SetVelocity(playerData.dashVelocity, dashDirection);
+                core.Movement.SetVelocity(playerData.dashVelocity, dashDirection);
                 
                 if(Time.time >= startTime + playerData.dashTime)
                 {
