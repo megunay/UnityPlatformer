@@ -29,6 +29,7 @@ public class PlayerDashState : PlayerAbilityState
         startTime = Time.unscaledTime;
 
         player.DashDirectionIndicator.gameObject.SetActive(true);
+
     }
 
     public override void Exit()
@@ -47,15 +48,17 @@ public class PlayerDashState : PlayerAbilityState
 
         if (!isExitingState)
         {
+
             player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(core.Movement.CurrentVelocity.x));
+
 
             if (isHolding)
             {
                 dashDirectionInput = player.InputHandler.DashDirectionInput;
                 dashInputStop = player.InputHandler.DashInputStop;
 
-                if(dashDirectionInput != Vector2.zero)
+                if (dashDirectionInput != Vector2.zero)
                 {
                     dashDirection = dashDirectionInput;
                     dashDirection.Normalize();
@@ -79,7 +82,8 @@ public class PlayerDashState : PlayerAbilityState
             {
                 core.Movement.SetVelocity(playerData.dashVelocity, dashDirection);
                 
-                if(Time.time >= startTime + playerData.dashTime)
+
+                if (Time.time >= startTime + playerData.dashTime)
                 {
                     player.RB.drag = 0f;
                     isAbilityDone = true;
@@ -88,6 +92,7 @@ public class PlayerDashState : PlayerAbilityState
             }
         }
     }
+
 
     public bool CheckIfCanDash()
     {
