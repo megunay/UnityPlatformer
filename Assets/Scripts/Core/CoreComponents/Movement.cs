@@ -17,6 +17,11 @@ public class Movement : CoreComponent
         RB = GetComponentInParent<Rigidbody2D>();
     }
 
+    public void LogicUpdate() 
+    {
+        CurrentVelocity = RB.velocity;
+    }
+
     #region Set Functions
 
     public void SetVelocityZero()

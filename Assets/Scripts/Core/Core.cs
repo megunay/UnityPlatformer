@@ -15,4 +15,9 @@ public class Core : MonoBehaviour
             Debug.LogError("Check Core Component");
         }
     }
+
+    public void LogicUpdate()
+    {
+        Movement.LogicUpdate();
+    }
 }

@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Variables
-    public Vector2 currentVelocity { get; private set; }
     public int FacingDir { get; private set; }
 
     private Vector2 workSpace;
