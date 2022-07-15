@@ -72,7 +72,7 @@ public class Movement : CoreComponent
     private void Flip()
     {
         FacingDir *= -1;
-        transform.Rotate(0f, 180f, 0f);
+        RB.transform.Rotate(0f, 180f, 0f);
     }
 
     #endregion

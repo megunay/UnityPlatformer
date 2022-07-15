@@ -37,13 +37,6 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    #region Check Transforms
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private Transform ledgeCheck;
-    [SerializeField] private Transform ceilingCheck;
-    #endregion
-
     #region Other Variables
     private Vector2 workSpace;
     #endregion
@@ -100,40 +93,6 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    #region Check Functions
-
-    public bool CheckIfTouchingGround()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-    }
-
-    public bool CheckForCeiling()
-    {
-        return Physics2D.OverlapCircle(ceilingCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-    }
-
-
-
-    public bool CheckIfTouchingWall()
-    {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
-    }
-
-    public bool CheckIfTouchingLedge()
-    {
-        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
-    }
-
-    public bool CheckIfTouchingWallBack()
-    {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * -Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
-    }
-
-
-
-
-    #endregion
-
     #region Other Functions
 
     public void SetColliderHeight(float height)
@@ -146,19 +105,7 @@ public class Player : MonoBehaviour
         MovementCollider.size = workSpace;
         MovementCollider.offset = center;
     }
-
-    public Vector2 DetermineCornerPosition()
-    {
-        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
-        float xDistance = xHit.distance;
-        workSpace.Set(xDistance + 0.015f * Core.Movement.FacingDir, 0f);
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workSpace),Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
-        float yDistance = yHit.distance;
-
-        workSpace.Set(wallCheck.position.x + (xDistance * Core.Movement.FacingDir), ledgeCheck.position.y - yDistance);
-
-        return workSpace;
-    }
+ 
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

@@ -15,7 +15,7 @@ public class PlayerAbilityState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = player.CheckIfTouchingGround();
+        isGrounded = core.CollisionSenses.Ground;
         
 
     }
