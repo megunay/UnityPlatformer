@@ -114,7 +114,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if (isTouchingWall && xInput == player.FacingDir && core.Movement.CurrentVelocity.y <= 0)
+        else if (isTouchingWall && xInput == core.Movement.FacingDir && core.Movement.CurrentVelocity.y <= 0)
         {
             stateMachine.ChangeState(player.WallSlideState);
         }
@@ -124,7 +124,7 @@ public class PlayerInAirState : PlayerState
         }
         else
         {
-            player.FlipCheck(xInput);
+            core.Movement.FlipCheck(xInput);
             core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
             player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);

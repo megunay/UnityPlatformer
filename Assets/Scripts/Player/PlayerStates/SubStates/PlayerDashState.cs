@@ -23,7 +23,7 @@ public class PlayerDashState : PlayerAbilityState
         player.InputHandler.UseDashInput();
 
         isHolding = true;
-        dashDirection = Vector2.right * player.FacingDir;
+        dashDirection = Vector2.right * core.Movement.FacingDir;
 
         Time.timeScale = playerData.holdTimeScale;
         startTime = Time.unscaledTime;
@@ -69,7 +69,7 @@ public class PlayerDashState : PlayerAbilityState
                     isHolding = false;
                     Time.timeScale = 1f;
                     startTime = Time.time;
-                    player.FlipCheck(Mathf.RoundToInt(dashDirection.x));
+                    core.Movement.FlipCheck(Mathf.RoundToInt(dashDirection.x));
                     player.RB.drag = playerData.drag;
                     core.Movement.SetVelocity(playerData.dashVelocity, dashDirection);
                     player.DashDirectionIndicator.gameObject.SetActive(false);

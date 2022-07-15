@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Variables
-    public int FacingDir { get; private set; }
     private Vector2 workSpace;
     #endregion
 
@@ -83,8 +82,6 @@ public class Player : MonoBehaviour
         MovementCollider = GetComponent<BoxCollider2D>();
         Inventory = GetComponent<PlayerInventory>();
 
-        FacingDir = 1;
-
         PrimaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
         //SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
 
@@ -115,27 +112,21 @@ public class Player : MonoBehaviour
         return Physics2D.OverlapCircle(ceilingCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
     }
 
-    public void FlipCheck(int xInput)
-    {
-        if(xInput != 0 && xInput != FacingDir)
-            {
-                Flip();
-            }
-    }
+
 
     public bool CheckIfTouchingWall()
     {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
     }
 
     public bool CheckIfTouchingLedge()
     {
-        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
     }
 
     public bool CheckIfTouchingWallBack()
     {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * -Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
     }
 
 
@@ -158,25 +149,20 @@ public class Player : MonoBehaviour
 
     public Vector2 DetermineCornerPosition()
     {
-        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * Core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;
-        workSpace.Set(xDistance + 0.015f * FacingDir, 0f);
+        workSpace.Set(xDistance + 0.015f * Core.Movement.FacingDir, 0f);
         RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workSpace),Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
         float yDistance = yHit.distance;
 
-        workSpace.Set(wallCheck.position.x + (xDistance * FacingDir), ledgeCheck.position.y - yDistance);
+        workSpace.Set(wallCheck.position.x + (xDistance * Core.Movement.FacingDir), ledgeCheck.position.y - yDistance);
 
         return workSpace;
     }
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-    private void Flip()
-    {
-        FacingDir *= -1;
-        transform.Rotate(0f, 180f, 0f); 
-        
-    }
+
 
     #endregion
 }

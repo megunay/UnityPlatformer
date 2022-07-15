@@ -8,6 +8,7 @@ public class PlayerLedgeClimbState : PlayerState
     private Vector2 cornerPos;
     private Vector2 startPos;
     private Vector2 stopPos;
+    private Vector2 workspace;
 
     private bool isHanging;
     private bool isClimbling;
@@ -39,10 +40,10 @@ public class PlayerLedgeClimbState : PlayerState
 
         core.Movement.SetVelocityZero();
         player.transform.position = detectedPos;
-        cornerPos = player.DetermineCornerPosition();
+        cornerPos = DetermineCornerPosition();
 
-        startPos.Set(cornerPos.x - (player.FacingDir * playerData.startOffset.x), cornerPos.y - playerData.startOffset.y);
-        stopPos.Set(cornerPos.x + (player.FacingDir * playerData.stopOffset.x), cornerPos.y + playerData.stopOffset.y);
+        startPos.Set(cornerPos.x - (core.Movement.FacingDir * playerData.startOffset.x), cornerPos.y - playerData.startOffset.y);
+        stopPos.Set(cornerPos.x + (core.Movement.FacingDir * playerData.stopOffset.x), cornerPos.y + playerData.stopOffset.y);
 
         player.transform.position = startPos;
     }
@@ -83,7 +84,7 @@ public class PlayerLedgeClimbState : PlayerState
             yInput = player.InputHandler.NormInputY;
             jumpInput = player.InputHandler.JumpInput;
 
-            if (xInput == player.FacingDir && isHanging && !isClimbling)
+            if (xInput == core.Movement.FacingDir && isHanging && !isClimbling)
             {
                 CheckForSpace();
                 isClimbling = true;
@@ -105,7 +106,20 @@ public class PlayerLedgeClimbState : PlayerState
 
     private void CheckForSpace()
     {
-        isTouchingCeiling = Physics2D.Raycast(cornerPos + (Vector2.up * 0.015f) + (Vector2.right * player.FacingDir * 0.015f), Vector2.up, playerData.standColliderHeight, playerData.whatIsGround);
+        isTouchingCeiling = Physics2D.Raycast(cornerPos + (Vector2.up * 0.015f) + (Vector2.right * core.Movement.FacingDir * 0.015f), Vector2.up, playerData.standColliderHeight, playerData.whatIsGround);
         player.Anim.SetBool("isTouchingCeiling", isTouchingCeiling);
+    }
+
+    public Vector2 DetermineCornerPosition()
+    {
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * core.Movement.FacingDir, playerData.wallCheckDistance, playerData.whatIsGround);
+        float xDistance = xHit.distance;
+        workspace.Set(xDistance + 0.015f * core.Movement.FacingDir, 0f);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workspace), Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
+        float yDistance = yHit.distance;
+
+        workspace.Set(wallCheck.position.x + (xDistance * core.Movement.FacingDir), ledgeCheck.position.y - yDistance);
+
+        return workspace;
     }
 }
